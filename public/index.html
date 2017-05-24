@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cbsChat">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>cbsChat</title>
+
+    <link rel="stylesheet" href="css/vendor.min.css">
+
+    <link rel="stylesheet" href="css/main.min.css">
+
+
+</head>
+
+<body>
+    <div class="container" ng-controller="chatCtrl as chat">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="clearfix">
+                            <div ng-if="chat.user" class="pull-left">
+                                <img ng-src="{{chat.user.photoURL}}" alt="User Avatar" class="user-pic pull-left img-circle">
+                                <h4 class="user-name">{{chat.user.displayName}}</h4>
+                            </div>
+                            <div class="pull-right">
+                                <button ng-if="!chat.user" class="btn btn-primary" ng-click="chat.login()">Login</button>
+                                <button ng-if="chat.user" class="btn btn-default" ng-click="chat.logout()">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                            <ul class="chat">
+                                <li ng-class="chat.user.uid == message.authorId ? 'right':'left'" class="clearfix" ng-repeat="message in chat.lastMessages">
+                                    <span ng-class="chat.user.uid == message.authorId ? 'pull-right':'pull-left'" class="chat-img">
+                                        <img ng-src="{{message.avatar}}" alt="User Avatar" class="user-pic img-circle" />
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font">{{message.authorName}}</strong>
+                                            <small class="pull-right text-muted">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                                {{message.date}}
+                                            </small>
+                                        </div>
+                                        <p>
+                                            {{message.text}}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input ng-disabled="!chat.user" send-by-ctrl-enter="chat.sendMessage()" ng-model="chat.textMessage" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <span class="input-group-btn">
+                                    <button ng-click="chat.sendMessage()" ng-disabled="!chat.textMessage" class="btn btn-success btn-sm">
+                                        Send
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vendor.min.js"></script>
+
+    <script src="js/main.min.js"></script>
+</body>
+
+</html>
